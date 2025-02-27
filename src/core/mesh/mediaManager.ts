@@ -6,7 +6,7 @@ export class MediaManager {
   private videoElement: HTMLVideoElement | null = null;
   private codecDetector = new CodecDetector();
   
-  async initializeStream(constraints: MediaStreamConstraints): Promise<MediaStream | null> {
+  async initializeStream(constraints: MediaStreamConstraints): Promise<MediaStream> {
     try {
       this.mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
       return this.mediaStream;
