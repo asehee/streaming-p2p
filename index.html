@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>초저지연 P2P 메시 스트리밍</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>초저지연 P2P 메시 스트리밍</h1>
+      <div class="mode-selector">
+        <button id="streamer-mode-btn" class="active">스트리머 모드</button>
+        <button id="viewer-mode-btn">시청자 모드</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- 스트리머 모드 화면 -->
+      <section id="streamer-section">
+        <div class="info-box">
+          <h2>스트리밍 중</h2>
+          <div class="room-info">
+            <span>방 ID: </span>
+            <span id="room-id-display"></span>
+            <button id="copy-room-id">복사</button>
+          </div>
+          <div class="viewer-count">
+            <span>시청자: </span>
+            <span id="viewer-count-display">0</span>명
+          </div>
+        </div>
+
+        <div class="video-container">
+          <video id="local-video" autoplay muted playsinline></video>
+          <div class="stream-controls">
+            <div class="quality-controls">
+              <button class="quality-btn" data-quality="low">저품질</button>
+              <button class="quality-btn" data-quality="medium">중품질</button>
+              <button class="quality-btn active" data-quality="high">고품질</button>
+            </div>
+            <div class="main-controls">
+              <button id="microphone-btn" class="control-btn">마이크</button>
+              <button id="camera-btn" class="control-btn">카메라</button>
+              <button id="share-screen-btn" class="control-btn">화면 공유</button>
+              <button id="stop-stream-btn" class="control-btn stop">방송 종료</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-container">
+          <h3>네트워크 통계</h3>
+          <div id="network-stats"></div>
+          <div id="network-graph"></div>
+        </div>
+      </section>
+
+      <!-- 시청자 모드 화면 -->
+      <section id="viewer-section" style="display:none;">
+        <div class="join-container">
+          <h2>스트림 시청</h2>
+          <div class="room-join">
+            <input type="text" id="room-id-input" placeholder="방 ID를 입력하세요">
+            <button id="join-room-btn">참여하기</button>
+          </div>
+        </div>
+
+        <div class="video-container" style="display:none;">
+          <video id="remote-video" autoplay playsinline controls></video>
+          <div class="stream-controls">
+            <div class="quality-controls">
+              <button class="quality-btn" data-quality="low">저품질</button>
+              <button class="quality-btn" data-quality="medium">중품질</button>
+              <button class="quality-btn active" data-quality="high">고품질</button>
+            </div>
+            <div class="main-controls">
+              <button id="stop-viewing-btn" class="control-btn stop">시청 종료</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-container">
+          <h3>네트워크 통계</h3>
+          <div id="viewer-network-stats"></div>
+          <div id="viewer-network-graph"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Vite에서는 모듈 직접 import -->
+  <script type="module">
+    import { createStreamingSDK } from './src/index.ts'
+    window.P2PMeshStreaming = { createStreamingSDK };
+  </script>
+  <script src="/app.js"></script>
+</body>
+</html>
